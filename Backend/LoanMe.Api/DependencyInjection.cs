@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using LoanMe.Application;
 using LoanMe.Data;
+using LoanMe.Infrastructure.Mediator;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 
@@ -12,6 +13,7 @@ namespace LoanMe.Api {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
 
+            services.AddMediatorFromAssembly(typeof(MediatorAnchor).Assembly);
             services.AddValidatorsFromAssembly(typeof(MediatorAnchor).Assembly);
 
             services.AddDbContext<ApplicationDbContext>(options =>
