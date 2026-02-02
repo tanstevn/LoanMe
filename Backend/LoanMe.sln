@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoanMe.Shared", "LoanMe.Sha
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Tests", "_Tests", "{3CE19829-81C2-4AAE-9CF2-70A42EBDE1D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoanMe.Tests.Unit", "LoanMe.Tests.Unit\LoanMe.Tests.Unit.csproj", "{76ABE442-E847-4867-A4B5-78EBAC4CD4C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,9 +43,16 @@ Global
 		{1A0EFBB0-3684-48FB-82F8-FD52BD8B13C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A0EFBB0-3684-48FB-82F8-FD52BD8B13C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A0EFBB0-3684-48FB-82F8-FD52BD8B13C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76ABE442-E847-4867-A4B5-78EBAC4CD4C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76ABE442-E847-4867-A4B5-78EBAC4CD4C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76ABE442-E847-4867-A4B5-78EBAC4CD4C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76ABE442-E847-4867-A4B5-78EBAC4CD4C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{76ABE442-E847-4867-A4B5-78EBAC4CD4C6} = {3CE19829-81C2-4AAE-9CF2-70A42EBDE1D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA22EDEB-7CE4-45C8-B03B-F0658F8366D1}

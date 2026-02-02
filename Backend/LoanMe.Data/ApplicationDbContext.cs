@@ -1,10 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LoanMe.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace LoanMe.Data {
-    public sealed class ApplicationDbContext : DbContext {
+    public class ApplicationDbContext : DbContext {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        public DbSet<User> Users { get; set; }
+        public DbSet<DraftLoan> DraftLoans { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

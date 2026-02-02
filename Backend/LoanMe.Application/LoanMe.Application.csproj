@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LoanMe.Data\LoanMe.Data.csproj" />
+    <ProjectReference Include="..\LoanMe.Infrastructure\LoanMe.Infrastructure.csproj" />
+    <ProjectReference Include="..\LoanMe.Shared\LoanMe.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
