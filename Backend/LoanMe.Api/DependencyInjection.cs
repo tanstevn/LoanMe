@@ -1,5 +1,41 @@
-﻿namespace LoanMe.Api {
-    public static class DependencyInjection {
+﻿using FluentValidation;
+using LoanMe.Application;
+using LoanMe.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
+namespace LoanMe.Api {
+    public static class DependencyInjection {
+        public static void ConfigureServices(IServiceCollection services, IConfiguration config) {
+            services.AddOpenApi();
+
+            services.AddControllers();
+            services.AddEndpointsApiExplorer();
+
+            services.AddValidatorsFromAssembly(typeof(MediatorAnchor).Assembly);
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(config.GetConnectionString("LoanMe")));
+        }
+
+        [SuppressMessage("Usage", "ASP0014:Suggest using top level route registrations", Justification = "<Pending>")]
+        public static void ConfigureApplication(WebApplication app, IWebHostEnvironment env) {
+            if (!env.IsEnvironment("Production")) {
+                app.MapOpenApi();
+            }
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
+                endpoints.MapFallback(context => {
+                    context.Response.StatusCode = StatusCodes.Status400BadRequest;
+
+                    return context
+                        .Response
+                        .WriteAsJsonAsync(string.Empty);
+                });
+            });
+        }
     }
 }
