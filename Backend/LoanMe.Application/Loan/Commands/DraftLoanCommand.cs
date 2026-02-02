@@ -67,10 +67,10 @@ namespace LoanMe.Application.Loan.Commands {
             await _validator.ValidateAndThrowAsync(request);
 
             var existingDraftLoan = await _dbContext.DraftLoans
-                .FirstOrDefaultAsync(loan => loan.User.FirstName == request.FirstName
-                    && loan.User.LastName == request.LastName
-                    && loan.User.DateOfBirth == request.DateOfBirth
-                    && !loan.IsApplied);
+                .FirstOrDefaultAsync(draftLoan => draftLoan.User.FirstName == request.FirstName
+                    && draftLoan.User.LastName == request.LastName
+                    && draftLoan.User.DateOfBirth == request.DateOfBirth
+                    && !draftLoan.IsApplied);
 
             if (existingDraftLoan is not null) {
                 return Result<DraftLoanCommandResult>
@@ -94,7 +94,7 @@ namespace LoanMe.Application.Loan.Commands {
                 User = user
             };
 
-            await _dbContext.DraftLoans.AddAsync(draftLoan);
+            _dbContext.DraftLoans.Add(draftLoan);
             await _dbContext.SaveChangesAsync();
 
             return Result<DraftLoanCommandResult>
