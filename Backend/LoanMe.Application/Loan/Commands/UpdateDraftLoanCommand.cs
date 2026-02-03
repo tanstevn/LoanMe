@@ -54,7 +54,7 @@ namespace LoanMe.Application.Loan.Commands {
             draftLoan.User.MobileNumber = request.Data!.MobileNumber;
             draftLoan.User.EmailAddress = request.Data!.EmailAddress!;
             draftLoan.User.ModifiedAt = utcNow;
-
+            
             draftLoan.Term = request.Data!.Term;
             draftLoan.LoanAmount = request.Data!.LoanAmount;
             draftLoan.ModifiedAt = utcNow;
