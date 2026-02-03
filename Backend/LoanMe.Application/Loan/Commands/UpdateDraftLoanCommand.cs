@@ -57,6 +57,9 @@ namespace LoanMe.Application.Loan.Commands {
 
             draftLoan.Term = request.Data!.Term;
             draftLoan.LoanAmount = request.Data!.LoanAmount;
+            draftLoan.ModifiedAt = utcNow;
+
+            await _dbContext.SaveChangesAsync();
 
             return Result<UpdateDraftLoanCommandResult>
                 .Success(new() {
