@@ -3,7 +3,7 @@ import { get } from "@/utils/http";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
 const formatFullUrl = (url: string) => {
-  let loanMeDomain = process.env.NEXT_LOANME_API_URL;
+  let loanMeDomain = process.env.NEXT_PUBLIC_LOANME_API_URL;
 
   if (!loanMeDomain) {
     throw new Error("NEXT_LOANME_API_URL is not set.");

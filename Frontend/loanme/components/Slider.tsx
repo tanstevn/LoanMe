@@ -4,7 +4,6 @@ interface SliderProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
   message: string;
-  current: number;
   minimum: number;
   maximum: number;
   unit?: string;
@@ -14,15 +13,13 @@ const Slider = ({
   label,
   id,
   message,
-  current,
   minimum,
   maximum,
   unit,
   ...props
 }: SliderProps) => {
-  const [curr, setCurr] = useState(current);
-
-  const percentage = ((curr - minimum) / (maximum - minimum)) * 100;
+  const percentage =
+    ((Number(props.value) - minimum) / (maximum - minimum)) * 100;
 
   return (
     <div className="relative mb-6">
@@ -41,7 +38,7 @@ const Slider = ({
         }}
       >
         {unit}
-        {curr}
+        {props.value}
       </span>
 
       <input
@@ -50,8 +47,6 @@ const Slider = ({
         type="range"
         min={minimum}
         max={maximum}
-        value={curr}
-        onChange={(event) => setCurr(Number(event.target.value))}
         className="w-full h-2 bg-neutral-quaternary rounded-full appearance-none cursor-pointer"
         {...props}
       />

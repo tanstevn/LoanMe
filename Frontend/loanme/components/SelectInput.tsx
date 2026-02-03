@@ -5,6 +5,7 @@ import { InputHTMLAttributes, useEffect } from "react";
 export interface SelectOption {
   id: string;
   value: string;
+  description?: string;
 }
 
 interface SelectInputProps extends InputHTMLAttributes<HTMLSelectElement> {
@@ -28,6 +29,8 @@ const SelectInput = ({
       props.onChange?.({ target: { value: options?.[0].id } } as any);
     }
   }, [props, options, isLoading]);
+
+  const selectedOption = options?.find((option) => option.id === props.value);
 
   const inputSize = (): string => {
     switch (widthSize) {
@@ -70,6 +73,12 @@ const SelectInput = ({
             ))}
         </select>
       </div>
+
+      {selectedOption?.description && (
+        <p className="mt-2 text-xs text-gray-400">
+          {selectedOption.description}
+        </p>
+      )}
     </div>
   );
 };

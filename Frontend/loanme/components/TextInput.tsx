@@ -6,7 +6,7 @@ interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
   placeholder?: string;
-  widthSize: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "full";
+  widthSize?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "full";
 }
 
 const TextInput = ({
