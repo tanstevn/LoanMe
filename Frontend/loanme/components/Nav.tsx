@@ -1,0 +1,78 @@
+"use client";
+
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import "../styles/globals.css";
+
+const Links = [
+  { name: "Home", href: "/" },
+  { name: "Loans", href: "/loans" },
+];
+
+const Nav = () => {
+  const path = usePathname();
+  const rootSegment = path.split("/")[1];
+
+  return (
+    <Disclosure as="nav" className="bg-slate-900">
+      {({ open }) => (
+        <>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex h-16 items-center justify-between">
+              <div className="flex items-center">
+                <div className="hidden sm:block">
+                  <div className="flex space-x-4">
+                    {Links.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className={`rounded-md hover:bg-gray-950 px-3 py-2 text-sm font-medium text-white ${rootSegment === link.href.split("/")[1] ? "bg-gray-950" : ""}`}
+                      >
+                        {link.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="-mr-2 flex sm:hidden">
+                <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <span className="absolute -inset-0.5" />
+                  <span className="sr-only">Open main menu</span>
+                  {open ? (
+                    <div className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <div className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </DisclosureButton>
+              </div>
+            </div>
+          </div>
+
+          <DisclosurePanel className="sm:hidden">
+            <div className="space-y-1 px-2 pb-3 pt-2">
+              {Links.map((link) => (
+                <DisclosureButton
+                  key={link.href}
+                  as="a"
+                  href={link.href}
+                  className={`block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white ${rootSegment === link.href.split("/")[1] ? "underline" : ""}`}
+                >
+                  {link.name}
+                </DisclosureButton>
+              ))}
+            </div>
+          </DisclosurePanel>
+        </>
+      )}
+    </Disclosure>
+  );
+};
+
+export default Nav;
