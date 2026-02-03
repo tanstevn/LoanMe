@@ -7,5 +7,7 @@ namespace LoanMe.Data.Entities {
         public string? Description { get; set; }
         public short LoanTermMinimum { get; set; }
         public short LoanTermMaximum { get; set; }
+        public decimal LoanAmountMinimum { get; set; }
+        public decimal LoanAmountMaximum { get; set; }
     }
 }

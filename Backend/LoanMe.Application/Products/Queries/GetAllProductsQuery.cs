@@ -12,6 +12,8 @@ namespace LoanMe.Application.Products.Queries {
         public string? Description { get; set; }
         public short MinimumTerm { get; set; }
         public short MaximumTerm { get; set; }
+        public decimal MinLoanAmount { get; set; }
+        public decimal MaxLoanAmount { get; set; }
     }
 
     public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, Result<ICollection<GetAllProductsQueryResult>>> {
@@ -28,7 +30,9 @@ namespace LoanMe.Application.Products.Queries {
                     Name = p.Name,
                     Description = p.Description,
                     MinimumTerm = p.LoanTermMinimum,
-                    MaximumTerm = p.LoanTermMaximum
+                    MaximumTerm = p.LoanTermMaximum,
+                    MinLoanAmount = p.LoanAmountMinimum,
+                    MaxLoanAmount = p.LoanAmountMaximum
                 })
                 .ToListAsync();
 
