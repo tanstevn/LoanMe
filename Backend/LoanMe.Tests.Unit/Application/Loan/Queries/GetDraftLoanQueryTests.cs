@@ -1,4 +1,5 @@
-﻿using LoanMe.Application.Loans.Queries;
+﻿using FluentAssertions;
+using LoanMe.Application.Loans.Queries;
 using LoanMe.Shared.Models;
 using LoanMe.Tests.Unit.Abstractions;
 
@@ -12,6 +13,7 @@ namespace LoanMe.Tests.Unit.Application.Loan.Queries {
                     request.Id = 1;
                 },
                 expected => {
+                    expected.Successful = true;
                     expected.Data = new() {
                         Title = "Mr.",
                         FirstName = "Steven",
@@ -25,7 +27,15 @@ namespace LoanMe.Tests.Unit.Application.Loan.Queries {
                 }
             )
             .Act()
-            .Assert();
+            .Assert(result => {
+                result.Successful
+                .Should()
+                .BeTrue();
+
+                result.Data
+                .Should()
+                .NotBeNull();
+            });
         }
     }
 }

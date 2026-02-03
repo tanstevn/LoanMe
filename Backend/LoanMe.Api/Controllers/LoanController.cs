@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LoanMe.Api.Controllers {
     [Route("api/loan")]
-    [ApiController, Produces("application/json")]
-    public class LoanController : ControllerBase {
+    public class LoanController : BaseController {
         private readonly IMediator _mediator;
 
         public LoanController(IMediator mediator) {

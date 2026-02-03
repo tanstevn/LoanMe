@@ -24,13 +24,22 @@ namespace LoanMe.Tests.Unit.Application.Loan.Commands {
                     request.LoanAmount = 5000m;
                 },
                 expected => {
+                    expected.Successful = true;
                     expected.Data = new() {
                         RedirectURL = ExpectedRedirectURL
                     };
                 }
             )
             .Act()
-            .Assert();
+            .Assert(result => {
+                result.Successful
+                .Should()
+                .BeTrue();
+
+                result.Data
+                .Should()
+                .NotBeNull();
+            });
         }
 
         [Fact]
