@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
-using LoanMe.Application.Loan.Commands;
+using LoanMe.Application.Loans.Commands;
 using LoanMe.Shared.Models;
 using LoanMe.Tests.Unit.Abstractions;
 

@@ -2,7 +2,7 @@
 using LoanMe.Infrastructure.Mediator.Abstractions;
 using LoanMe.Shared.Models;
 
-namespace LoanMe.Application.Loan.Commands {
+namespace LoanMe.Application.Loans.Commands {
     public class ApplyLoanCommand : ICommand<Result<ApplyLoanCommandResult>> {
         public long Id { get; set; }
         public decimal RepaymentAmount { get; set; }

@@ -5,7 +5,7 @@ using LoanMe.Infrastructure.Mediator.Abstractions;
 using LoanMe.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LoanMe.Application.Loan.Commands {
+namespace LoanMe.Application.Loans.Commands {
     public class DraftLoanCommand : ICommand<Result<DraftLoanCommandResult>> {
         public string? Title { get; set; }
         public string? FirstName { get; set; }

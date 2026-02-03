@@ -3,7 +3,7 @@ using LoanMe.Data;
 using LoanMe.Infrastructure.Mediator.Abstractions;
 using LoanMe.Shared.Models;
 
-namespace LoanMe.Application.Loan.Commands {
+namespace LoanMe.Application.Loans.Commands {
     public class UpdateDraftLoanCommand : ICommand<Result<UpdateDraftLoanCommandResult>> {
         public long Id { get; set; }
         public DraftLoanCommand? Data { get; set; }

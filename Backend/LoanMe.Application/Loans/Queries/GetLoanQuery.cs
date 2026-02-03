@@ -2,7 +2,7 @@
 using LoanMe.Infrastructure.Mediator.Abstractions;
 using LoanMe.Shared.Models;
 
-namespace LoanMe.Application.Loan.Queries {
+namespace LoanMe.Application.Loans.Queries {
     public class GetLoanQuery : IQuery<Result<GetLoanQueryResult>> {
         public long Id { get; set; }
     }

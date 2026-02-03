@@ -1,5 +1,5 @@
-﻿using LoanMe.Application.Loan.Commands;
-using LoanMe.Application.Loan.Queries;
+﻿using LoanMe.Application.Loans.Commands;
+using LoanMe.Application.Loans.Queries;
 using LoanMe.Infrastructure.Mediator.Abstractions;
 using LoanMe.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
