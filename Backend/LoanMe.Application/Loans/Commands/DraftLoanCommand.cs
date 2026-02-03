@@ -75,7 +75,7 @@ namespace LoanMe.Application.Loans.Commands {
             if (existingDraftLoan is not null) {
                 return Result<DraftLoanCommandResult>
                     .Success(new() {
-                        RedirectURL = $"http://localhost:3001/loan/calculator?id={existingDraftLoan.Id}"
+                        RedirectURL = $"http://localhost:3001/loans?id={existingDraftLoan.Id}"
                     });
             }
 
@@ -103,7 +103,7 @@ namespace LoanMe.Application.Loans.Commands {
 
             return Result<DraftLoanCommandResult>
                 .Success(new() {
-                    RedirectURL = $"http://localhost:3001/loan/calculator?id={draftLoan.Id}"
+                    RedirectURL = $"http://localhost:3001/loans?id={draftLoan.Id}"
                 });
         }
     }

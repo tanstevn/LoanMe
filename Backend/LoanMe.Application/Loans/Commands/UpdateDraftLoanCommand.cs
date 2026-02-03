@@ -63,7 +63,7 @@ namespace LoanMe.Application.Loans.Commands {
 
             return Result<UpdateDraftLoanCommandResult>
                 .Success(new() {
-                    RedirectURL = $"http://localhost:3001/loan/calculator?id={draftLoan.Id}"
+                    RedirectURL = $"http://localhost:3001/loans?id={draftLoan.Id}"
                 });
         }
     }

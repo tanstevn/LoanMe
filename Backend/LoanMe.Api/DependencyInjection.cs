@@ -18,6 +18,14 @@ namespace LoanMe.Api {
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(config.GetConnectionString("LoanMe")));
+
+            services.AddCors(options => {
+                options.AddDefaultPolicy(policy => {
+                    policy.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
         }
 
         [SuppressMessage("Usage", "ASP0014:Suggest using top level route registrations", Justification = "<Pending>")]
@@ -26,6 +34,7 @@ namespace LoanMe.Api {
                 app.MapOpenApi();
             }
 
+            app.UseCors();
             app.UseRouting();
 
             app.UseEndpoints(endpoints => {

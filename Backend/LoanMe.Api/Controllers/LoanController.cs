@@ -14,8 +14,8 @@ namespace LoanMe.Api.Controllers {
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<Result<GetLoanQueryResult>> GetLoan([FromQuery] GetLoanQuery query) {
+        [HttpGet("draft")]
+        public async Task<Result<GetDraftLoanQueryResult>> GetDraftLoan([FromQuery] GetDraftLoanQuery query) {
             return await _mediator.SendAsync(query);
         }
 
