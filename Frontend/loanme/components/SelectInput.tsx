@@ -2,7 +2,7 @@
 
 import { InputHTMLAttributes, useEffect } from "react";
 
-export interface SelectOpntion {
+export interface SelectOption {
   id: string;
   value: string;
 }
@@ -10,8 +10,9 @@ export interface SelectOpntion {
 interface SelectInputProps extends InputHTMLAttributes<HTMLSelectElement> {
   label: string;
   id: string;
-  options: SelectOpntion[] | undefined;
+  options: SelectOption[] | undefined;
   isLoading: boolean;
+  widthSize: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
 }
 
 const SelectInput = ({
@@ -19,6 +20,7 @@ const SelectInput = ({
   id,
   options,
   isLoading,
+  widthSize,
   ...props
 }: SelectInputProps) => {
   useEffect(() => {
@@ -26,6 +28,23 @@ const SelectInput = ({
       props.onChange?.({ target: { value: options?.[0].id } } as any);
     }
   }, [props, options, isLoading]);
+
+  const inputSize = (): string => {
+    switch (widthSize) {
+      case "sm":
+        return "max-w-24";
+      case "md":
+        return "max-w-32";
+      case "lg":
+        return "max-w-40";
+      case "xl":
+        return "max-w-48";
+      case "2xl":
+        return "max-w-64";
+      default:
+        return "";
+    }
+  };
 
   return (
     <div className="sm:col-span-4">
@@ -39,7 +58,7 @@ const SelectInput = ({
       <div className="mt-2">
         <select
           id={id}
-          className={`block w-full rounded-md border-0 bg-white/5 pl-1 py-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6 [&_*]:text-black ${isLoading && "cursor-not-allowed"}`}
+          className={`block w-full ${inputSize()} rounded-md border-0 bg-white/5 pl-1 py-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6 [&_*]:text-black ${isLoading && "cursor-not-allowed"}`}
           {...props}
         >
           {isLoading && <option>Loading...</option>}

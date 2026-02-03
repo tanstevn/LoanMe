@@ -6,9 +6,37 @@ interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
   placeholder?: string;
+  widthSize: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "full";
 }
 
-const TextInput = ({ label, id, placeholder, ...props }: TextInputProps) => {
+const TextInput = ({
+  label,
+  id,
+  placeholder,
+  widthSize,
+  ...props
+}: TextInputProps) => {
+  const inputSize = (): string => {
+    switch (widthSize) {
+      case "sm":
+        return "max-w-24";
+      case "md":
+        return "max-w-32";
+      case "lg":
+        return "max-w-40";
+      case "xl":
+        return "max-w-48";
+      case "2xl":
+        return "max-w-64";
+      case "3xl":
+        return "max-w-80";
+      case "4xl":
+        return "max-w-96";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="sm:col-span-4">
       <label
@@ -19,7 +47,9 @@ const TextInput = ({ label, id, placeholder, ...props }: TextInputProps) => {
       </label>
 
       <div className="mt-2">
-        <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus_within:ring-inset">
+        <div
+          className={`flex w-full ${inputSize()} rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus_within:ring-inset`}
+        >
           <input
             id={id}
             placeholder={placeholder}

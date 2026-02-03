@@ -13,7 +13,9 @@ interface FormHeaderProps extends HTMLAttributes<HTMLDivElement> {
 
 interface FormSectionProps extends PropsWithChildren<
   HTMLAttributes<HTMLDivElement>
-> {}
+> {
+  className?: string;
+}
 
 const FormRoot = ({ children, ...props }: FormProps) => {
   return <form {...props}>{children}</form>;
@@ -28,10 +30,10 @@ const FormHeader = ({ title, description, ...props }: FormHeaderProps) => {
   );
 };
 
-const FormSection = ({ children, ...props }: FormSectionProps) => {
+const FormSection = ({ className, children, ...props }: FormSectionProps) => {
   return (
     <div className="pb-6" {...props}>
-      <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <div className={`${className} mt-10 gap-x-6 gap-y-8 sm:grid-cols-6`}>
         {children}
       </div>
     </div>

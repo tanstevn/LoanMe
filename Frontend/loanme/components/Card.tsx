@@ -39,9 +39,9 @@ const CardTitle = ({ children, className, ...props }: CardTitleProps) => {
 
 const CardBody = ({ children, className, ...props }: CardBodyProps) => {
   return (
-    <p className={`${className} text-xs text-gray-400, pl-0.5`} {...props}>
+    <div className={`${className} text-xs text-gray-400, pl-0.5`} {...props}>
       {children}
-    </p>
+    </div>
   );
 };
 

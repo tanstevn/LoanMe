@@ -1,7 +1,11 @@
-const LoansPage = async () => {
+"use client";
+
+import LoansCalculator from "./calculator/page";
+
+const LoansPage = () => {
   return (
     <main>
-      <div>Hello, Loans!</div>
+      <LoansCalculator />
     </main>
   );
 };
