@@ -79,19 +79,23 @@ namespace LoanMe.Application.Loan.Commands {
                     });
             }
 
+            var utcNow = DateTime.UtcNow;
+
             var user = new User {
                 Title = request.Title,
                 FirstName = request.FirstName!,
                 LastName = request.LastName!,
                 DateOfBirth = request.DateOfBirth,
                 MobileNumber = request.MobileNumber,
-                EmailAddress = request.EmailAddress!
+                EmailAddress = request.EmailAddress!,
+                CreatedAt = utcNow
             };
 
             var draftLoan = new DraftLoan {
                 Term = request.Term,
                 LoanAmount = request.LoanAmount,
-                User = user
+                User = user,
+                CreatedAt = utcNow
             };
 
             _dbContext.DraftLoans.Add(draftLoan);

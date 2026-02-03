@@ -34,7 +34,7 @@ namespace LoanMe.Tests.Unit.Application.Loan.Commands {
         }
 
         [Fact]
-        public void DraftLoanCommand_Validate_Required_Parameters_Fails() {
+        public void DraftLoanCommand_Validate_Required_Parameters_Throws_ValidationException() {
             Arrange(
                 request => { },
                 validationResult => {

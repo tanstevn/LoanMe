@@ -9,6 +9,8 @@ namespace LoanMe.Data.Entities {
         public required DateTime DateOfBirth { get; set; }
         public string? MobileNumber { get; set; }
         public required string EmailAddress { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
 
         public virtual DraftLoan? DraftLoan { get; set; }
     }
