@@ -4,12 +4,22 @@ using LoanMe.Application;
 using LoanMe.Data;
 using LoanMe.Infrastructure.Mediator;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using System.Diagnostics.CodeAnalysis;
 
 namespace LoanMe.Api {
     public static class DependencyInjection {
         public static void ConfigureServices(IServiceCollection services, IConfiguration config) {
-            services.AddOpenApi();
+            services.AddOpenApi(options => {
+                options.AddDocumentTransformer((document, context, _) => {
+                    document.Info = new() {
+                        Title = "LoanMe APIs",
+                        Version = "v1"
+                    };
+
+                    return Task.CompletedTask;
+                });
+            });
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
@@ -33,6 +43,10 @@ namespace LoanMe.Api {
         public static void ConfigureApplication(WebApplication app, IWebHostEnvironment env) {
             if (!env.IsEnvironment("Production")) {
                 app.MapOpenApi();
+                app.MapScalarApiReference();
+
+                app.MapGet("/", () => Results.Redirect("/scalar/v1"))
+                    .ExcludeFromDescription();
             }
 
             app.UseCors();

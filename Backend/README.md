@@ -22,3 +22,11 @@ Run the local server with:
 ```bash
 dotnet run --project ./LoanMe.Api
 ```
+
+## API endpoints
+
+You can check the endpoints and their respective request and response models when you go to:
+
+```bash
+http://localhost:5145/scalar/v1
+```
