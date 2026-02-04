@@ -30,8 +30,9 @@ namespace LoanMe.Api.Controllers {
         }
 
         [HttpPost]
-        public async Task<Result<ApplyLoanCommandResult>> ApplyLoan([FromBody] ApplyLoanCommand command) {
-            return await _mediator.SendAsync(command);
+        public async Task<IActionResult> ApplyLoan([FromBody] ApplyLoanCommand command) {
+            var result = await _mediator.SendAsync(command);
+            return Created("api/loan", result);
         }
 
         [HttpGet("calculator/quote")]

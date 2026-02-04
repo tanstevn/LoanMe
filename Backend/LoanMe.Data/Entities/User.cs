@@ -13,5 +13,6 @@ namespace LoanMe.Data.Entities {
         public DateTime? ModifiedAt { get; set; }
 
         public virtual DraftLoan? DraftLoan { get; set; }
+        public virtual ActiveLoan? ActiveLoan { get; set; }
     }
 }

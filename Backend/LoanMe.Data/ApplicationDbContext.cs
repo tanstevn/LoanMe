@@ -8,6 +8,7 @@ namespace LoanMe.Data {
         public DbSet<User> Users { get; set; }
         public DbSet<DraftLoan> DraftLoans { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ActiveLoan> ActiveLoans { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);

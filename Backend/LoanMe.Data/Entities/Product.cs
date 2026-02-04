@@ -12,5 +12,7 @@ namespace LoanMe.Data.Entities {
         public decimal InterestRate { get; set; }
         public decimal EstablishmentFee { get; set; }
         public short? InterestFreeMonths { get; set; }
+
+        public virtual ActiveLoan? ActiveLoan { get; set; }
     }
 }
