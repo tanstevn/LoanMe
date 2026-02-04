@@ -16,6 +16,7 @@ namespace LoanMe.Application.Loans.Queries {
         public string? EmailAddress { get; set; }
         public short Term { get; set; }
         public decimal LoanAmount { get; set; }
+        public bool IsApplied { get; set; }
     }
 
     public class GetDraftLoanQueryHandler : IRequestHandler<GetDraftLoanQuery, Result<GetDraftLoanQueryResult>> {
@@ -42,7 +43,8 @@ namespace LoanMe.Application.Loans.Queries {
                     MobileNumber = draftLoan.User.MobileNumber,
                     EmailAddress = draftLoan.User.EmailAddress,
                     Term = draftLoan.Term,
-                    LoanAmount = draftLoan.LoanAmount
+                    LoanAmount = draftLoan.LoanAmount,
+                    IsApplied = draftLoan.IsApplied
                 });
         }
     }

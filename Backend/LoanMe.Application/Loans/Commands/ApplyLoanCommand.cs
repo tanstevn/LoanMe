@@ -64,6 +64,10 @@ namespace LoanMe.Application.Loans.Commands {
                 throw new Exception($"There is no existing draft loan with id of: {request.DraftLoanId}");
             }
 
+            if (draftLoan.IsApplied) {
+                throw new Exception($"This draft loan with id {draftLoan.Id} have already been applied");
+            }
+
             var blacklistedMobiles = await _dbContext.BlacklistMobiles
                 .Select(list => list.MobileNumber)
                 .ToListAsync();
@@ -105,6 +109,7 @@ namespace LoanMe.Application.Loans.Commands {
             };
 
             _dbContext.ActiveLoans.Add(activeLoan);
+            draftLoan.IsApplied = true;
             await _dbContext.SaveChangesAsync();
 
             return Result<ApplyLoanCommandResult>

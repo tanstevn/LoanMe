@@ -71,6 +71,8 @@ namespace LoanMe.Application.Loans.Commands {
         public virtual async Task<Result<DraftLoanCommandResult>> HandleAsync(DraftLoanCommand request) {
             await _validator.ValidateAndThrowAsync(request);
 
+            var redirectUrl = "http://localhost:3001/loans?id={0}";
+
             var existingDraftLoan = await _dbContext.DraftLoans
                 .FirstOrDefaultAsync(draftLoan => draftLoan.User.FirstName == request.FirstName
                     && draftLoan.User.LastName == request.LastName
@@ -80,7 +82,7 @@ namespace LoanMe.Application.Loans.Commands {
             if (existingDraftLoan is not null) {
                 return Result<DraftLoanCommandResult>
                     .Success(new() {
-                        RedirectURL = $"http://localhost:3001/loans?id={existingDraftLoan.Id}"
+                        RedirectURL = string.Format(redirectUrl, existingDraftLoan.Id)
                     });
             }
 
@@ -108,7 +110,7 @@ namespace LoanMe.Application.Loans.Commands {
 
             return Result<DraftLoanCommandResult>
                 .Success(new() {
-                    RedirectURL = $"http://localhost:3001/loans?id={draftLoan.Id}"
+                    RedirectURL = string.Format(redirectUrl, draftLoan.Id)
                 });
         }
     }

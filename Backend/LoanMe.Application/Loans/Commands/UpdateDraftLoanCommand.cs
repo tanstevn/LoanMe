@@ -43,6 +43,10 @@ namespace LoanMe.Application.Loans.Commands {
                 throw new Exception($"There is no existing draft loan with id of: {request.DraftLoanId}");
             }
 
+            if (draftLoan.IsApplied) {
+                throw new Exception($"This draft loan with id {draftLoan.Id} have already been applied");
+            }
+
             var utcNow = DateTime.UtcNow;
 
             draftLoan.User.Title = request.Data!.Title;
