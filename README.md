@@ -53,4 +53,4 @@ This flow is by order.
 	- The `apply now` button will call `POST api/loan` endpoint to store in `ActiveLoans` table the loan request details. This will then redirect you to success page `loans/success`.
 
 4. Success page
-	- This will display the `application number` stored from `ActiveLoans` table when you have clicked the `apply now` button on the earlier scenario. This is displayed for future reference of the customer.
+	- This will display the `application number` stored from `ActiveLoans` table when you have clicked the `apply now` button on the earlier scenario. This is displayed for future reference for the customer.
