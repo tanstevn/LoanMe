@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using LoanMe.Data;
 using LoanMe.Data.Entities;
+using LoanMe.Data.Extensions;
 using LoanMe.Infrastructure.Mediator.Abstractions;
 using LoanMe.Shared.Models;
 
@@ -11,6 +12,7 @@ namespace LoanMe.Application.Loans.Commands {
         public decimal RepaymentAmount { get; set; }
         public decimal EstablishmentFee { get; set; }
         public decimal TotalInterest { get; set; }
+        public DateTime? Date { get; set; }
     }
 
     public class ApplyLoanCommandResult {
@@ -58,6 +60,10 @@ namespace LoanMe.Application.Loans.Commands {
 
             if (draftLoan is null) {
                 throw new Exception($"There is no existing draft loan with id of: {request.DraftLoanId}.");
+            }
+
+            if (!draftLoan.User.IsLegalAge(ageRequired: 18)) {
+                throw new Exception("User is not in legal age to request for a loan.");
             }
 
             var product = await _dbContext.Products

@@ -4,6 +4,7 @@ using LoanMe.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoanMe.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260204162941_Change_ActiveLoan_Product_Relationship")]
+    partial class Change_ActiveLoan_Product_Relationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,80 +65,6 @@ namespace LoanMe.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("ActiveLoans");
-                });
-
-            modelBuilder.Entity("LoanMe.Data.Entities.BlacklistEmailDomain", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Domain")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Domain");
-
-                    b.ToTable("BlackListEmailDomains");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            CreatedAt = new DateTime(2026, 2, 4, 17, 19, 19, 161, DateTimeKind.Utc).AddTicks(8324),
-                            Domain = "hacker.com"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            CreatedAt = new DateTime(2026, 2, 4, 17, 19, 19, 161, DateTimeKind.Utc).AddTicks(8324),
-                            Domain = "helloworld.com"
-                        });
-                });
-
-            modelBuilder.Entity("LoanMe.Data.Entities.BlacklistMobile", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MobileNumber")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MobileNumber");
-
-                    b.ToTable("BlacklistMobiles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            CreatedAt = new DateTime(2026, 2, 4, 17, 19, 19, 164, DateTimeKind.Utc).AddTicks(8812),
-                            MobileNumber = "1234567890"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            CreatedAt = new DateTime(2026, 2, 4, 17, 19, 19, 164, DateTimeKind.Utc).AddTicks(8812),
-                            MobileNumber = "0987654321"
-                        });
                 });
 
             modelBuilder.Entity("LoanMe.Data.Entities.DraftLoan", b =>

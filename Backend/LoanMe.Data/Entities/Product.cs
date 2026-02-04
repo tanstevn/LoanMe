@@ -13,6 +13,6 @@ namespace LoanMe.Data.Entities {
         public decimal EstablishmentFee { get; set; }
         public short? InterestFreeMonths { get; set; }
 
-        public virtual ActiveLoan? ActiveLoan { get; set; }
+        public virtual ICollection<ActiveLoan>? ActiveLoans { get; set; }
     }
 }

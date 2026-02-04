@@ -19,7 +19,8 @@ namespace LoanMe.Data.Configurations {
                 .WithOne(user => user.ActiveLoan);
 
             builder.HasOne(activeLoan => activeLoan.Product)
-                .WithOne(product => product.ActiveLoan);
+                .WithMany(product => product.ActiveLoans)
+                .HasForeignKey(activeLoan => activeLoan.ProductId);
 
             builder.Navigation(activeLoan => activeLoan.User)
                 .AutoInclude();
