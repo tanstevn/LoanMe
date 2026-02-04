@@ -7,8 +7,8 @@ import { Form } from "@/components/Form";
 import SelectInput, { SelectOption } from "@/components/SelectInput";
 import Slider from "@/components/Slider";
 import TextInput from "@/components/TextInput";
-import { useApiQuery } from "@/hooks/query";
-import { useSearchParams } from "next/navigation";
+import { useApiMutation, useApiQuery } from "@/hooks/query";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface ProductsList {
@@ -40,6 +40,13 @@ interface GetDraftLoanResult {
   loanAmount: number;
 }
 
+interface UpdateDraftLoanRequest {
+  draftLoanId: number;
+  data: GetDraftLoanResult;
+}
+
+interface UpdateDraftLoanResult {}
+
 const LoansCalculator = () => {
   const [titleId, setTitleId] = useState(1);
   const [firstName, setFirstName] = useState("");
@@ -49,20 +56,36 @@ const LoansCalculator = () => {
   const [emailAddress, setEmailAddress] = useState("");
   const [term, setTerm] = useState(0);
   const [loanAmount, setLoanAmount] = useState(0);
-  const [selectedProductId, setSelectedProductId] = useState("");
+  const [selectedProductId, setSelectedProductId] = useState("1");
   const [products, setProducts] = useState<GetAllProductsResult[]>();
   const [productsList, setProductsList] = useState<ProductsList>();
 
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const draftLoanId = searchParams.get("id");
 
   const { data: draftedLoan, isLoading: isGetDraftLoanLoading } =
     useApiQuery<GetDraftLoanResult>("/loan/draft", {
-      id,
+      id: draftLoanId,
     });
 
   const { data: allProducts, isLoading: isGetAllProductsLoading } =
     useApiQuery<GetAllProductsResult[]>("/product/all");
+
+  const { mutateAsync: mutateUpdateDraftLoan, isIdle: isUpdateDraftLoanIdle } =
+    useApiMutation<UpdateDraftLoanRequest, UpdateDraftLoanResult>(
+      "/loan/draft/update",
+      "PUT",
+      {
+        onSuccess() {
+          router.replace(
+            `/loans/quote?productId=${selectedProductId}&draftLoanId=${draftLoanId}`,
+          );
+
+          router.refresh();
+        },
+      },
+    );
 
   const titlesList: TitlesList = {
     items: [
@@ -85,7 +108,27 @@ const LoansCalculator = () => {
     return dateTime?.split("T")[0];
   };
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    if (isUpdateDraftLoanIdle) {
+      const request: UpdateDraftLoanRequest = {
+        draftLoanId: Number(draftLoanId),
+        data: {
+          title: titlesList.items.find(
+            (title) => title.id === titleId.toString(),
+          )?.value!,
+          firstName: firstName,
+          lastName: lastName,
+          dateOfBirth: dateOfBirth,
+          mobileNumber: mobileNumber,
+          emailAddress: emailAddress,
+          term: term,
+          loanAmount: loanAmount,
+        },
+      };
+
+      mutateUpdateDraftLoan(request);
+    }
+  };
 
   useEffect(() => {
     if (draftedLoan) {
@@ -114,7 +157,6 @@ const LoansCalculator = () => {
 
       setProductsList(products);
       setProducts(allProducts);
-      setSelectedProductId(products.items[0].id);
     }
   }, [allProducts]);
 
@@ -147,7 +189,7 @@ const LoansCalculator = () => {
       {!isGetDraftLoanLoading && !isGetAllProductsLoading && (
         <Form>
           <Card>
-            <Card.Title>Quote Calculator</Card.Title>
+            <Card.Title className="-mb-0">Quote Calculator</Card.Title>
             <Card.Body>
               <Form.Section className="space-y-10">
                 <SelectInput
@@ -222,7 +264,10 @@ const LoansCalculator = () => {
                     id="dateOfBirth"
                     label="Date of birth"
                     value={dateOfBirth}
-                    onChange={(event) => setDateOfBirth(event.target.value)}
+                    onChange={(event) => {
+                      setDateOfBirth(event.target.value);
+                      console.log({ dateOfBirth });
+                    }}
                   />
                 </div>
 
@@ -245,7 +290,11 @@ const LoansCalculator = () => {
 
               <Form.Section>
                 <div className="flex flex-col justify-center items-center gap-y-4">
-                  <Button type="submit" className="w-80 flex-1">
+                  <Button
+                    type="button"
+                    className="w-80 flex-1"
+                    onClick={onSubmit}
+                  >
                     Calculate quote
                   </Button>
 

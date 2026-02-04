@@ -1,5 +1,19 @@
 import { ResultErrors } from "@/types/result";
 
+export const formatFullUrl = (url: string) => {
+  let loanMeDomain = process.env.NEXT_PUBLIC_LOANME_API_URL;
+
+  if (!loanMeDomain) {
+    throw new Error("NEXT_LOANME_API_URL is not set.");
+  }
+
+  if (loanMeDomain[loanMeDomain.length - 1] === "/") {
+    loanMeDomain = loanMeDomain.slice(0, loanMeDomain.length - 1);
+  }
+
+  return loanMeDomain + "/api" + url;
+};
+
 const serializeQueryParamsFromObject = function (
   paramsObject: any,
   path?: string,
@@ -92,4 +106,12 @@ const common = async (
 
 export const get = async <T>(url: string, queryParams?: any): Promise<T> => {
   return common("GET", url, undefined, queryParams);
+};
+
+export const post = async <T>(url: string, body: any): Promise<T> => {
+  return common("POST", url, body);
+};
+
+export const put = async <T>(url: string, body: any): Promise<T> => {
+  return common("PUT", url, body);
 };

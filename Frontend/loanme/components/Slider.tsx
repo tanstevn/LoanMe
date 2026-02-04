@@ -1,3 +1,4 @@
+import { toMoneyFormat } from "@/helpers/formatter";
 import { InputHTMLAttributes, useState } from "react";
 
 interface SliderProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -38,7 +39,7 @@ const Slider = ({
         }}
       >
         {unit}
-        {props.value}
+        {unit === "$" ? toMoneyFormat(Number(props.value)) : props.value}
       </span>
 
       <input
@@ -53,7 +54,7 @@ const Slider = ({
 
       <span className="text-sm text-body absolute start-0 -bottom-6">
         {unit}
-        {minimum}
+        {unit === "$" ? toMoneyFormat(minimum) : minimum}
       </span>
 
       <span className="text-sm text-body absolute start-1/2 -translate-x-1/2 rtl:translate-x-1/2 -bottom-6">
@@ -62,7 +63,7 @@ const Slider = ({
 
       <span className="text-sm text-body absolute end-0 -bottom-6">
         {unit}
-        {maximum}
+        {unit === "$" ? toMoneyFormat(maximum) : maximum}
       </span>
     </div>
   );
