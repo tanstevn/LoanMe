@@ -17,6 +17,7 @@ namespace LoanMe.Application.Loans.Queries {
         public decimal TotalInterest { get; set; }
         public decimal EstablishmentFee { get; set; }
         public decimal RepaymentAmount { get; set; }
+        public bool IsApplied { get; set; }
     }
 
     public class CalculateQuoteQueryHandler : IRequestHandler<CalculateQuoteQuery, Result<CalculateQuoteQueryResult>> {
@@ -56,7 +57,8 @@ namespace LoanMe.Application.Loans.Queries {
                         LoanTerm = draftLoan.Term,
                         TotalInterest = default,
                         EstablishmentFee = product.EstablishmentFee,
-                        RepaymentAmount = principalAmount / draftLoan.Term
+                        RepaymentAmount = principalAmount / draftLoan.Term,
+                        IsApplied = draftLoan.IsApplied
                     });
             }
 
@@ -94,7 +96,8 @@ namespace LoanMe.Application.Loans.Queries {
                     LoanTerm = draftLoan.Term,
                     TotalInterest = Math.Round(totalInterest, 2),
                     EstablishmentFee = product.EstablishmentFee,
-                    RepaymentAmount = Math.Round(repaymentAmount, 2)
+                    RepaymentAmount = Math.Round(repaymentAmount, 2),
+                    IsApplied = draftLoan.IsApplied
                 });
         }
     }
