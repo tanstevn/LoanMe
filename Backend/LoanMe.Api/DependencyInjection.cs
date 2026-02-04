@@ -50,6 +50,14 @@ namespace LoanMe.Api {
                         .WriteAsJsonAsync(string.Empty);
                 });
             });
+
+            using var scope = app.Services
+                .CreateScope();
+
+            scope.ServiceProvider
+                .GetRequiredService<ApplicationDbContext>()
+                .Database
+                .Migrate();
         }
     }
 }
