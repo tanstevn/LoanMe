@@ -15,7 +15,6 @@ namespace LoanMe.Api.Middlewares {
                 await _next(context);
             }
             catch (ValidationException ex) {
-                //context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 context.Response.ContentType = "application/json";
 
                 var errorObject = Result<object>
@@ -24,11 +23,10 @@ namespace LoanMe.Api.Middlewares {
                 await context.Response.WriteAsJsonAsync(errorObject);
             }
             catch (Exception ex) {
-                //context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 context.Response.ContentType = "application/json";
 
                 var errorObject = Result<object>
-                    .Error("Something went wrong.");
+                    .Error($"Something went wrong. {ex.Message}");
 
                 await context.Response.WriteAsJsonAsync(errorObject);
             }
