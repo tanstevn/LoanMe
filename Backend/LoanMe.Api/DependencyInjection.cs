@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using LoanMe.Api.Middlewares;
 using LoanMe.Application;
 using LoanMe.Data;
 using LoanMe.Infrastructure.Mediator;
@@ -47,6 +48,8 @@ namespace LoanMe.Api {
                         .WriteAsJsonAsync(string.Empty);
                 });
             });
+
+            app.UseMiddleware<ExceptionMiddleware>();
         }
     }
 }
