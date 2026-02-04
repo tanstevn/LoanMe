@@ -43,6 +43,7 @@ interface GetDraftLoanResult {
   emailAddress: string;
   term: number;
   loanAmount: number;
+  isApplied?: boolean;
 }
 
 interface UpdateDraftLoanRequest {
@@ -191,6 +192,16 @@ const LoansCalculator = ({ id: draftLoanId }: LoansCalculatorProps) => {
       return previous;
     });
   }, [selectedProduct, minLoanTerm, maxLoanTerm]);
+
+  if (draftedLoan?.isApplied) {
+    return (
+      <div className="w-full lg:w-1/2 mx-auto">
+        <h1 className="text-6xl py-6 text-center tracking-tighter font-mono text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600">
+          This loan have already been applied
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <>
