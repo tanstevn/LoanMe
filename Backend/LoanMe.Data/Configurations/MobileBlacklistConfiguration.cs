@@ -12,16 +12,14 @@ namespace LoanMe.Data.Configurations {
 
             builder.HasIndex(mobileList => mobileList.MobileNumber);
 
-            var utcNow = DateTime.UtcNow;
-
             builder.HasData(new() {
                 Id = 1,
                 MobileNumber = "1234567890",
-                CreatedAt = utcNow
+                CreatedAt = new DateTime()
             }, new() {
                 Id = 2,
                 MobileNumber = "0987654321",
-                CreatedAt = utcNow
+                CreatedAt = new DateTime()
             });
         }
     }

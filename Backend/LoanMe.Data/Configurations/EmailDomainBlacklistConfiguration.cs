@@ -17,11 +17,11 @@ namespace LoanMe.Data.Configurations {
             builder.HasData(new() {
                 Id = 1,
                 Domain = "hacker.com",
-                CreatedAt = utcNow
+                CreatedAt = new DateTime()
             }, new() {
                 Id = 2,
                 Domain = "helloworld.com",
-                CreatedAt = utcNow
+                CreatedAt = new DateTime()
             });
         }
     }
