@@ -4,6 +4,8 @@ using LoanMe.Data.Entities;
 using LoanMe.Data.Extensions;
 using LoanMe.Infrastructure.Mediator.Abstractions;
 using LoanMe.Shared.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace LoanMe.Application.Loans.Commands {
     public class ApplyLoanCommand : ICommand<Result<ApplyLoanCommandResult>> {
@@ -23,11 +25,11 @@ namespace LoanMe.Application.Loans.Commands {
         public ApplyLoanCommandValidator() {
             RuleFor(param => param.DraftLoanId)
                 .GreaterThan(default(long))
-                .WithMessage("DraftLoanId is required and must be greater than zero.");
+                .WithMessage("Draft loan id is required and must be greater than zero.");
 
             RuleFor(param => param.ProductId)
                 .GreaterThan(default(long))
-                .WithMessage("ProductId is required and must be greater than zero.");
+                .WithMessage("Product id is required and must be greater than zero.");
 
             RuleFor(param => param.RepaymentAmount)
                 .GreaterThan(default(decimal))
@@ -62,8 +64,26 @@ namespace LoanMe.Application.Loans.Commands {
                 throw new Exception($"There is no existing draft loan with id of: {request.DraftLoanId}.");
             }
 
-            if (!draftLoan.User.IsLegalAge(ageRequired: 18)) {
-                throw new Exception("User is not in legal age to request for a loan.");
+            var blacklistedMobiles = await _dbContext.BlacklistMobiles
+                .Select(list => list.MobileNumber)
+                .ToListAsync();
+
+            var blacklistedDomains = await _dbContext.BlackListEmailDomains
+                .Select(list => list.Domain)
+                .ToListAsync();
+
+            var user = draftLoan.User;
+
+            if (!user.IsLegalAge(ageRequired: 18)) {
+                throw new Exception("User is not of legal age to request for a loan.");
+            }
+
+            if (user.IsMobileBlacklisted(blacklistedMobiles)) {
+                throw new Exception("User mobile number is blacklisted.");
+            }
+
+            if (user.IsEmailDomainBlacklisted(blacklistedDomains)) {
+                throw new Exception("User email domain is blacklisted.");
             }
 
             var product = await _dbContext.Products

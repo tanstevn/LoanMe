@@ -9,5 +9,18 @@ namespace LoanMe.Data.Extensions {
 
             return ageToday >= ageRequired;
         }
+
+        public static bool IsMobileBlacklisted(this User user, IEnumerable<string> mobileNumbers) {
+            var mobileNumber = user.MobileNumber;
+            return mobileNumbers.Any(number => mobileNumber == number);
+        }
+
+        public static bool IsEmailDomainBlacklisted(this User user, IEnumerable<string> domains) {
+            var emailDomain = user.EmailAddress
+                .Split('@')
+                .Last();
+
+            return domains.Any(domain => emailDomain == domain);
+        }
     }
 }

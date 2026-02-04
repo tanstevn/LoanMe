@@ -13,7 +13,7 @@ namespace LoanMe.Api.Controllers {
         }
 
         [HttpGet("all")]
-        public async Task<Result<ICollection<GetAllProductsQueryResult>>> GetAllProducts([FromQuery] GetAllProductsQuery query) {
+        public async Task<Result<IEnumerable<GetAllProductsQueryResult>>> GetAllProducts([FromQuery] GetAllProductsQuery query) {
             return await _mediator.SendAsync(query);
         }
     }

@@ -15,7 +15,7 @@ namespace LoanMe.Application.Loans.Commands {
         public UpdateDraftLoanCommandValidator() {
             RuleFor(param => param.DraftLoanId)
                 .GreaterThan(default(long))
-                .WithMessage("DraftLoanId must be greater than zero.");
+                .WithMessage("Draft loan id must be greater than zero.");
 
             RuleFor(param => param.Data)
                 .NotNull()

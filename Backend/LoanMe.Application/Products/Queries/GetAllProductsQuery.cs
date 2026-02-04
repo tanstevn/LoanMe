@@ -4,7 +4,7 @@ using LoanMe.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LoanMe.Application.Products.Queries {
-    public class GetAllProductsQuery : IQuery<Result<ICollection<GetAllProductsQueryResult>>> { }
+    public class GetAllProductsQuery : IQuery<Result<IEnumerable<GetAllProductsQueryResult>>> { }
 
     public class GetAllProductsQueryResult {
         public long Id { get; set; }
@@ -16,14 +16,14 @@ namespace LoanMe.Application.Products.Queries {
         public decimal MaxLoanAmount { get; set; }
     }
 
-    public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, Result<ICollection<GetAllProductsQueryResult>>> {
+    public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, Result<IEnumerable<GetAllProductsQueryResult>>> {
         private readonly ApplicationDbContext _dbContext;
 
         public GetAllProductsQueryHandler(ApplicationDbContext dbContext) {
             _dbContext = dbContext;
         }
 
-        public virtual async Task<Result<ICollection<GetAllProductsQueryResult>>> HandleAsync(GetAllProductsQuery request) {
+        public virtual async Task<Result<IEnumerable<GetAllProductsQueryResult>>> HandleAsync(GetAllProductsQuery request) {
             var products = await _dbContext.Products
                 .Select(p => new GetAllProductsQueryResult {
                     Id = p.Id,
@@ -36,7 +36,7 @@ namespace LoanMe.Application.Products.Queries {
                 })
                 .ToListAsync();
 
-            return Result<ICollection<GetAllProductsQueryResult>>
+            return Result<IEnumerable<GetAllProductsQueryResult>>
                 .Success(products);
         }
     }

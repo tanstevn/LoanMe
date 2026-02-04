@@ -5,7 +5,7 @@ using LoanMe.Tests.Unit.Abstractions;
 
 namespace LoanMe.Tests.Unit.Application.Products.Queries {
     public class GetAllProductsQueryTests : BaseUnitTest<GetAllProductsQueryTests, GetAllProductsQuery, 
-        Result<ICollection<GetAllProductsQueryResult>>, GetAllProductsQueryHandler> {
+        Result<IEnumerable<GetAllProductsQueryResult>>, GetAllProductsQueryHandler> {
         [Fact]
         public void GetAllProductsQuery_Runs_Successfully() {
             Arrange(

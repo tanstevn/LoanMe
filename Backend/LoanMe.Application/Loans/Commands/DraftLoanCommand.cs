@@ -37,6 +37,11 @@ namespace LoanMe.Application.Loans.Commands {
                 .NotNull()
                 .WithMessage("Date of birth is required.");
 
+            RuleFor(param => param.MobileNumber)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Mobile number is required.");
+
             RuleFor(param => param.EmailAddress)
                 .NotNull()
                 .NotEmpty()
