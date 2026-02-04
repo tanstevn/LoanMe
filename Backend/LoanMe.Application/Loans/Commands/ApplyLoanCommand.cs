@@ -5,7 +5,6 @@ using LoanMe.Data.Extensions;
 using LoanMe.Infrastructure.Mediator.Abstractions;
 using LoanMe.Shared.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace LoanMe.Application.Loans.Commands {
     public class ApplyLoanCommand : ICommand<Result<ApplyLoanCommandResult>> {
@@ -103,6 +102,8 @@ namespace LoanMe.Application.Loans.Commands {
                 User = draftLoan.User,
                 Product = product,
                 ApplicationNumber = appNumber,
+                LoanAmount = draftLoan.LoanAmount,
+                LoanTerm = draftLoan.Term,
                 RepaymentAmount = request.RepaymentAmount,
                 TotalInterest = request.TotalInterest,
                 CreatedAt = DateTime.UtcNow

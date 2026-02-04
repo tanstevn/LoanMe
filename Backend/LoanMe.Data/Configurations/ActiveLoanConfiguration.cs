@@ -9,6 +9,12 @@ namespace LoanMe.Data.Configurations {
             builder.Property(activeLoan => activeLoan.ApplicationNumber)
                 .IsRequired();
 
+            builder.Property(activeLoan => activeLoan.LoanAmount)
+                .IsRequired();
+
+            builder.Property(activeLoan => activeLoan.LoanTerm)
+                .IsRequired();
+
             builder.Property(activeLoan => activeLoan.RepaymentAmount)
                 .IsRequired();
 

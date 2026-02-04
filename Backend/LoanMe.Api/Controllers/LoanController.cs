@@ -30,15 +30,13 @@ namespace LoanMe.Api.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> ApplyLoan([FromBody] ApplyLoanCommand command) {
-            var result = await _mediator.SendAsync(command);
-            return Created("api/loan", result);
+        public async Task<Result<ApplyLoanCommandResult>> ApplyLoan([FromBody] ApplyLoanCommand command) {
+            return await _mediator.SendAsync(command);
         }
 
         [HttpGet("calculator/quote")]
-        public async Task<IActionResult> GetCalculatedQuote([FromQuery] CalculateQuoteQuery query) {
-            var result = await _mediator.SendAsync(query);
-            return Ok(result);
+        public async Task<Result<CalculateQuoteQueryResult>> GetCalculatedQuote([FromQuery] CalculateQuoteQuery query) {
+            return await _mediator.SendAsync(query);
         }
     }
 }
