@@ -283,10 +283,7 @@ const LoansCalculator = ({ id: draftLoanId }: LoansCalculatorProps) => {
                     id="dateOfBirth"
                     label="Date of birth"
                     value={dateOfBirth}
-                    onChange={(event) => {
-                      setDateOfBirth(event.target.value);
-                      console.log({ dateOfBirth });
-                    }}
+                    onChange={(event) => setDateOfBirth(event.target.value)}
                   />
                 </div>
 
