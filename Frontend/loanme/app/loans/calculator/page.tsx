@@ -8,8 +8,13 @@ import SelectInput, { SelectOption } from "@/components/SelectInput";
 import Slider from "@/components/Slider";
 import TextInput from "@/components/TextInput";
 import { useApiMutation, useApiQuery } from "@/hooks/query";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
+interface LoansCalculatorProps {
+  id: string;
+}
 
 interface ProductsList {
   items: SelectOption[];
@@ -47,7 +52,7 @@ interface UpdateDraftLoanRequest {
 
 interface UpdateDraftLoanResult {}
 
-const LoansCalculator = () => {
+const LoansCalculator = ({ id: draftLoanId }: LoansCalculatorProps) => {
   const [titleId, setTitleId] = useState(1);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -61,8 +66,7 @@ const LoansCalculator = () => {
   const [productsList, setProductsList] = useState<ProductsList>();
 
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const draftLoanId = searchParams.get("id");
+  const quoteUrl = `/loans/quote?productId=${selectedProductId}&id=${draftLoanId}`;
 
   const { data: draftedLoan, isLoading: isGetDraftLoanLoading } =
     useApiQuery<GetDraftLoanResult>("/loan/draft", {
@@ -72,20 +76,24 @@ const LoansCalculator = () => {
   const { data: allProducts, isLoading: isGetAllProductsLoading } =
     useApiQuery<GetAllProductsResult[]>("/product/all");
 
-  const { mutateAsync: mutateUpdateDraftLoan, isIdle: isUpdateDraftLoanIdle } =
-    useApiMutation<UpdateDraftLoanRequest, UpdateDraftLoanResult>(
-      "/loan/draft/update",
-      "PUT",
-      {
-        onSuccess() {
-          router.replace(
-            `/loans/quote?productId=${selectedProductId}&draftLoanId=${draftLoanId}`,
-          );
-
-          router.refresh();
-        },
+  const {
+    mutateAsync: mutateUpdateDraftLoanCommand,
+    isIdle: isUpdateDraftLoanCommandIdle,
+    reset: resetUpdateDraftLoanCommand,
+  } = useApiMutation<UpdateDraftLoanRequest, UpdateDraftLoanResult>(
+    "/loan/draft/update",
+    "PUT",
+    {
+      onSuccess() {
+        router.replace(quoteUrl);
+        router.refresh();
       },
-    );
+      onError(error) {
+        toast.error(error.join(", "));
+        resetUpdateDraftLoanCommand();
+      },
+    },
+  );
 
   const titlesList: TitlesList = {
     items: [
@@ -109,7 +117,7 @@ const LoansCalculator = () => {
   };
 
   const onSubmit = () => {
-    if (isUpdateDraftLoanIdle) {
+    if (isUpdateDraftLoanCommandIdle) {
       const request: UpdateDraftLoanRequest = {
         draftLoanId: Number(draftLoanId),
         data: {
@@ -126,7 +134,7 @@ const LoansCalculator = () => {
         },
       };
 
-      mutateUpdateDraftLoan(request);
+      mutateUpdateDraftLoanCommand(request);
     }
   };
 

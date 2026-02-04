@@ -2,9 +2,11 @@
 
 import Button from "@/components/Button";
 import { Card } from "@/components/Card";
-import { toMoneyFormat } from "@/helpers/formatter";
-import { useApiQuery } from "@/hooks/query";
+import { toMoneyFormat } from "@/utils/formatter";
+import { useApiMutation, useApiQuery } from "@/hooks/query";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useApplicationNumberContext } from "@/hooks/context";
+import { toast } from "react-toastify";
 
 interface CalculateQuoteRequest {
   productId: number;
@@ -22,11 +24,25 @@ interface CalculateQuoteResult {
   repaymentAmount: number;
 }
 
+interface ApplyLoanRequest {
+  draftLoanId: number;
+  productId: number;
+  repaymentAmount: number;
+  establishmentFee: number;
+  totalInterest: number;
+}
+
+interface ApplyLoanResult {
+  applicationNumber: string;
+}
+
 const QuotePage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const applicationNumberContext = useApplicationNumberContext();
+
   const productId = searchParams.get("productId");
-  const draftLoanId = searchParams.get("draftLoanId");
+  const draftLoanId = searchParams.get("id");
 
   const { data: calculatedQuote, isLoading: isCalculatedQuoteLoading } =
     useApiQuery<CalculateQuoteResult>("/loan/calculator/quote", {
@@ -34,12 +50,42 @@ const QuotePage = () => {
       draftLoanId,
     });
 
+  const {
+    mutateAsync: mutateApplyLoan,
+    isIdle: isApplyLoanMutationIdle,
+    reset: resetApplyLoan,
+  } = useApiMutation<ApplyLoanRequest, ApplyLoanResult>("/loan", "POST", {
+    onSuccess(result: ApplyLoanResult) {
+      applicationNumberContext?.setApplicationNumber(result.applicationNumber);
+
+      router.replace("/loans/success");
+    },
+    onError(error) {
+      toast.error(error.join(", "));
+      resetApplyLoan();
+    },
+  });
+
   const totalRepayments = () => {
     const loanAmount = calculatedQuote?.loanAmount ?? 0;
     const totalInterest = calculatedQuote?.totalInterest ?? 0;
     const establishmentFee = calculatedQuote?.establishmentFee ?? 0;
 
     return toMoneyFormat(loanAmount + totalInterest + establishmentFee);
+  };
+
+  const onSubmit = () => {
+    if (isApplyLoanMutationIdle) {
+      const request: ApplyLoanRequest = {
+        draftLoanId: Number(draftLoanId),
+        productId: Number(productId),
+        repaymentAmount: calculatedQuote?.repaymentAmount ?? 0,
+        establishmentFee: calculatedQuote?.establishmentFee ?? -1,
+        totalInterest: calculatedQuote?.totalInterest ?? -1,
+      };
+
+      mutateApplyLoan(request);
+    }
   };
 
   return (
@@ -122,7 +168,7 @@ const QuotePage = () => {
         </div>
 
         <div className="mt-14 flex flex-col justify-center items-center gap-y-4">
-          <Button type="button" className="w-64 flex-1">
+          <Button type="submit" className="w-64 flex-1" onClick={onSubmit}>
             Apply now
           </Button>
 

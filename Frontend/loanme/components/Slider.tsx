@@ -1,4 +1,4 @@
-import { toMoneyFormat } from "@/helpers/formatter";
+import { toMoneyFormat } from "@/utils/formatter";
 import { InputHTMLAttributes, useState } from "react";
 
 interface SliderProps extends InputHTMLAttributes<HTMLInputElement> {

@@ -23,7 +23,7 @@ export const useApiQuery = <T>(
   });
 };
 
-export const useApiMutation = <TResponse, TBody>(
+export const useApiMutation = <TBody, TResponse>(
   url: string,
   action: "POST" | "PUT",
   options?: Omit<
