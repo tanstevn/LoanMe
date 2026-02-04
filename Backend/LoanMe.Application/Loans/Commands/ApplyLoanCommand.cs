@@ -79,7 +79,7 @@ namespace LoanMe.Application.Loans.Commands {
             var user = draftLoan.User;
 
             if (!user.IsLegalAge(ageRequired: 18)) {
-                throw new Exception("User is not of legal age to request for a loan");
+                throw new Exception("User is not in legal age to request for a loan");
             }
 
             if (user.IsMobileBlacklisted(blacklistedMobiles)) {

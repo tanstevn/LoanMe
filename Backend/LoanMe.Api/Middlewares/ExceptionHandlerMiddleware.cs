@@ -26,7 +26,7 @@ namespace LoanMe.Api.Middlewares {
                 context.Response.ContentType = "application/json";
 
                 var errorObject = Result<object>
-                    .Error($"Something went wrong. {ex.Message}");
+                    .Error(ex.Message);
 
                 await context.Response.WriteAsJsonAsync(errorObject);
             }

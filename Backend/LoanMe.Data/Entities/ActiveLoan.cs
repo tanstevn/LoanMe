@@ -12,7 +12,7 @@ namespace LoanMe.Data.Entities {
         public DateTime CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
 
-        public virtual User? User { get; set; }
-        public virtual Product? Product { get; set; }
+        public virtual required User User { get; set; }
+        public virtual required Product Product { get; set; }
     }
 }
