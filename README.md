@@ -50,4 +50,4 @@ This flow is by order.
 	- This will be displayed once you have clicked the calculate quote button from the calculator quote page.
 	- Upon render, it will call `GET api/loan/calculator/quote` endpoint to fetch the necessary details to be displayed in the page.
 	- The `edit` button will just make you go back to calculator page.
-	- The `apply now` button will call `POST api/loan` endpoint to store in `ActiveLoans` table the loan request details. This will then redirect your to success page `loans/success` and will display the application number generated and stored from the table for future reference of the user.
+	- The `apply now` button will call `POST api/loan` endpoint to store in `ActiveLoans` table the loan request details. This will then redirect you to success page `loans/success` and will display the application number generated and stored from the table for future reference of the user.
