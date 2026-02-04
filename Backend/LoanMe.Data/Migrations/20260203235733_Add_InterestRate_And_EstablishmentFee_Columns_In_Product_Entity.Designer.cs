@@ -4,6 +4,7 @@ using LoanMe.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoanMe.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260203235733_Add_InterestRate_And_EstablishmentFee_Columns_In_Product_Entity")]
+    partial class Add_InterestRate_And_EstablishmentFee_Columns_In_Product_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,9 +74,6 @@ namespace LoanMe.Data.Migrations
                     b.Property<decimal>("EstablishmentFee")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<short?>("InterestFreeMonths")
-                        .HasColumnType("smallint");
-
                     b.Property<decimal>("InterestRate")
                         .HasColumnType("decimal(18,2)");
 
@@ -102,7 +102,7 @@ namespace LoanMe.Data.Migrations
                         new
                         {
                             Id = 1L,
-                            Description = "This product is interest-free loan.",
+                            Description = "This product is interest-free free loan.",
                             EstablishmentFee = 300m,
                             InterestRate = 0m,
                             LoanAmountMaximum = 2000000m,
@@ -116,7 +116,6 @@ namespace LoanMe.Data.Migrations
                             Id = 2L,
                             Description = "This product gives the first 2 months interest-free but the loan term duration is 6 months minimum.",
                             EstablishmentFee = 250m,
-                            InterestFreeMonths = (short)2,
                             InterestRate = 0.05m,
                             LoanAmountMaximum = 20000m,
                             LoanAmountMinimum = 1000m,
@@ -129,7 +128,6 @@ namespace LoanMe.Data.Migrations
                             Id = 3L,
                             Description = "This product provides no interest-free.",
                             EstablishmentFee = 100m,
-                            InterestFreeMonths = (short)0,
                             InterestRate = 0.02m,
                             LoanAmountMaximum = 2000m,
                             LoanAmountMinimum = 100m,

@@ -14,7 +14,7 @@ namespace LoanMe.Tests.Unit.Application.Loan.Commands {
         public void UpdateDraftLoanCommand_Runs_Successfully() {
             Arrange(
                 request => {
-                    request.Id = 1;
+                    request.DraftLoanId = 1;
                     request.Data = new() {
                         Title = "Mr.",
                         FirstName = "Lester",
@@ -28,9 +28,6 @@ namespace LoanMe.Tests.Unit.Application.Loan.Commands {
                 },
                 expected => {
                     expected.Successful = true;
-                    expected.Data = new() {
-                        RedirectURL = ExpectedRedirectURL
-                    };
                 }
             )
             .Act()
@@ -41,7 +38,7 @@ namespace LoanMe.Tests.Unit.Application.Loan.Commands {
 
                 result.Data
                 .Should()
-                .NotBeNull();
+                .BeNull();
             });
         }
 
@@ -49,7 +46,7 @@ namespace LoanMe.Tests.Unit.Application.Loan.Commands {
         public void UpdateDraftLoanCommand_Validate_Required_Parameter_Id_Throws_ValidationException() {
             Arrange(
                 request => {
-                    request.Id = 0;
+                    request.DraftLoanId = 0;
                     request.Data = new() {
                         Title = "Mr.",
                         FirstName = "Lester",
@@ -76,7 +73,7 @@ namespace LoanMe.Tests.Unit.Application.Loan.Commands {
         public void UpdateDraftLoanCommand_Validate_Required_Parameter_Data_As_Null_Throws_ValidationException() {
             Arrange(
                 request => {
-                    request.Id = 1;
+                    request.DraftLoanId = 1;
                     request.Data = null;
                 },
                 validationResult => {
@@ -94,7 +91,7 @@ namespace LoanMe.Tests.Unit.Application.Loan.Commands {
         public void UpdateDraftLoanCommand_Validate_Required_Parameter_Data_With_No_FirstName_Throws_ValidationException() {
             Arrange(
                 request => {
-                    request.Id = 1;
+                    request.DraftLoanId = 1;
                     request.Data = new() {
                         Title = "Mr.",
                         LastName = "Tan",

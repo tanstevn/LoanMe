@@ -9,5 +9,8 @@ namespace LoanMe.Data.Entities {
         public short LoanTermMaximum { get; set; }
         public decimal LoanAmountMinimum { get; set; }
         public decimal LoanAmountMaximum { get; set; }
+        public decimal InterestRate { get; set; }
+        public decimal EstablishmentFee { get; set; }
+        public short? InterestFreeMonths { get; set; }
     }
 }
