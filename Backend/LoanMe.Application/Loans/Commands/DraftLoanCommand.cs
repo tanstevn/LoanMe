@@ -26,36 +26,36 @@ namespace LoanMe.Application.Loans.Commands {
             RuleFor(param => param.FirstName)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("First name is required.");
+                .WithMessage("First name is required");
 
             RuleFor(param => param.LastName)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Last name is required.");
+                .WithMessage("Last name is required");
 
             RuleFor(param => param.DateOfBirth)
                 .NotNull()
-                .WithMessage("Date of birth is required.");
+                .WithMessage("Date of birth is required");
 
             RuleFor(param => param.MobileNumber)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Mobile number is required.");
+                .WithMessage("Mobile number is required");
 
             RuleFor(param => param.EmailAddress)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Email address is required.")
+                .WithMessage("Email address is required")
                 .EmailAddress()
-                .WithMessage("Invalid email address format.");
+                .WithMessage("Invalid email address format");
 
             RuleFor(param => param.Term)
                 .GreaterThan(default(short))
-                .WithMessage("Term is required and must be greater than zero.");
+                .WithMessage("Term is required and must be greater than zero");
 
             RuleFor(param => param.LoanAmount)
                 .GreaterThan(default(decimal))
-                .WithMessage("Loan amount is required and must be greater than zero.");
+                .WithMessage("Loan amount is required and must be greater than zero");
         }
     }
 

@@ -31,14 +31,14 @@ namespace LoanMe.Application.Loans.Queries {
                 .FindAsync(request.DraftLoanId);
 
             if (draftLoan is null) {
-                throw new Exception($"There is no existing draft loan with id of: {request.DraftLoanId}.");
+                throw new Exception($"There is no existing draft loan with id of: {request.DraftLoanId}");
             }
 
             var product = await _dbContext.Products
                 .FindAsync(request.ProductId);
 
             if (product is null) {
-                throw new Exception($"There is no existing product with id of: {request.ProductId}.");
+                throw new Exception($"There is no existing product with id of: {request.ProductId}");
             }
 
             var fullName = string.Format("{0} {1}", draftLoan.User.FirstName,

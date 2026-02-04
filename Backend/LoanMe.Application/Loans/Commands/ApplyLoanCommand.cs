@@ -25,23 +25,23 @@ namespace LoanMe.Application.Loans.Commands {
         public ApplyLoanCommandValidator() {
             RuleFor(param => param.DraftLoanId)
                 .GreaterThan(default(long))
-                .WithMessage("Draft loan id is required and must be greater than zero.");
+                .WithMessage("Draft loan id is required and must be greater than zero");
 
             RuleFor(param => param.ProductId)
                 .GreaterThan(default(long))
-                .WithMessage("Product id is required and must be greater than zero.");
+                .WithMessage("Product id is required and must be greater than zero");
 
             RuleFor(param => param.RepaymentAmount)
                 .GreaterThan(default(decimal))
-                .WithMessage("Repayment amount is required and must be greater than zero.");
+                .WithMessage("Repayment amount is required and must be greater than zero");
 
             RuleFor(param => param.EstablishmentFee)
                 .GreaterThanOrEqualTo(default(decimal))
-                .WithMessage("Establishment fee must be greater than or equal to zero.");
+                .WithMessage("Establishment fee must be greater than or equal to zero");
 
             RuleFor(param => param.TotalInterest)
                 .GreaterThanOrEqualTo(default(decimal))
-                .WithMessage("Total interest must be greater than or equal to zero.");
+                .WithMessage("Total interest must be greater than or equal to zero");
         }
     }
 
@@ -61,7 +61,7 @@ namespace LoanMe.Application.Loans.Commands {
                 .FindAsync(request.DraftLoanId);
 
             if (draftLoan is null) {
-                throw new Exception($"There is no existing draft loan with id of: {request.DraftLoanId}.");
+                throw new Exception($"There is no existing draft loan with id of: {request.DraftLoanId}");
             }
 
             var blacklistedMobiles = await _dbContext.BlacklistMobiles
@@ -75,22 +75,22 @@ namespace LoanMe.Application.Loans.Commands {
             var user = draftLoan.User;
 
             if (!user.IsLegalAge(ageRequired: 18)) {
-                throw new Exception("User is not of legal age to request for a loan.");
+                throw new Exception("User is not of legal age to request for a loan");
             }
 
             if (user.IsMobileBlacklisted(blacklistedMobiles)) {
-                throw new Exception("User mobile number is blacklisted.");
+                throw new Exception("User mobile number is blacklisted");
             }
 
             if (user.IsEmailDomainBlacklisted(blacklistedDomains)) {
-                throw new Exception("User email domain is blacklisted.");
+                throw new Exception("User email domain is blacklisted");
             }
 
             var product = await _dbContext.Products
                 .FindAsync(request.ProductId);
 
             if (product is null) {
-                throw new Exception($"There is no existing product with id of: {request.ProductId}.");
+                throw new Exception($"There is no existing product with id of: {request.ProductId}");
             }
 
             var appNumber = Guid.NewGuid();

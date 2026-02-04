@@ -3,10 +3,10 @@ using LoanMe.Shared.Models;
 using System.Text.Json;
 
 namespace LoanMe.Api.Middlewares {
-    public class ExceptionMiddleware {
+    public class ExceptionHandlerMiddleware {
         private readonly RequestDelegate _next;
 
-        public ExceptionMiddleware(RequestDelegate next) {
+        public ExceptionHandlerMiddleware(RequestDelegate next) {
             _next = next;
         }
 
@@ -15,20 +15,16 @@ namespace LoanMe.Api.Middlewares {
                 await _next(context);
             }
             catch (ValidationException ex) {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                //context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 context.Response.ContentType = "application/json";
 
                 var errorObject = Result<object>
                     .MultipleErrors(ex.Errors.Select(err => err.ErrorMessage));
 
-                var serializedErrorObj = JsonSerializer.Serialize(errorObject, new JsonSerializerOptions {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-
-                await context.Response.WriteAsJsonAsync(serializedErrorObj);
+                await context.Response.WriteAsJsonAsync(errorObject);
             }
             catch (Exception ex) {
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                //context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 context.Response.ContentType = "application/json";
 
                 var errorObject = Result<object>

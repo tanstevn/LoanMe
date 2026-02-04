@@ -15,11 +15,11 @@ namespace LoanMe.Application.Loans.Commands {
         public UpdateDraftLoanCommandValidator() {
             RuleFor(param => param.DraftLoanId)
                 .GreaterThan(default(long))
-                .WithMessage("Draft loan id must be greater than zero.");
+                .WithMessage("Draft loan id must be greater than zero");
 
             RuleFor(param => param.Data)
                 .NotNull()
-                .WithMessage("Data is required.")
+                .WithMessage("Data is required")
                 .SetValidator(new DraftLoanCommandValidator()!);
         }
     }
@@ -40,7 +40,7 @@ namespace LoanMe.Application.Loans.Commands {
                 .FindAsync(request.DraftLoanId);
 
             if (draftLoan is null) {
-                throw new Exception($"There is no existing draft loan with id of: {request.DraftLoanId}.");
+                throw new Exception($"There is no existing draft loan with id of: {request.DraftLoanId}");
             }
 
             var utcNow = DateTime.UtcNow;

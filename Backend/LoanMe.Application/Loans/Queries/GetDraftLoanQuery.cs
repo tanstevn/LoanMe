@@ -30,7 +30,7 @@ namespace LoanMe.Application.Loans.Queries {
                 .FindAsync(request.Id);
 
             if (draftLoan is null) {
-                throw new Exception($"There is no existing draft loan with id of: {request.Id}.");
+                throw new Exception($"There is no existing draft loan with id of: {request.Id}");
             }
 
             return Result<GetDraftLoanQueryResult>

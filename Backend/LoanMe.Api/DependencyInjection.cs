@@ -36,8 +36,10 @@ namespace LoanMe.Api {
             }
 
             app.UseCors();
-            app.UseRouting();
 
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+            app.UseRouting();
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
                 endpoints.MapFallback(context => {
@@ -48,8 +50,6 @@ namespace LoanMe.Api {
                         .WriteAsJsonAsync(string.Empty);
                 });
             });
-
-            app.UseMiddleware<ExceptionMiddleware>();
         }
     }
 }
