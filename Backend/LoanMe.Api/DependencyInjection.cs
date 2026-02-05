@@ -50,7 +50,6 @@ namespace LoanMe.Api {
             }
 
             app.UseCors();
-
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseRouting();

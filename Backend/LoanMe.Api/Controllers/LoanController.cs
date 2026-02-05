@@ -3,8 +3,11 @@ using LoanMe.Application.Loans.Queries;
 using LoanMe.Infrastructure.Mediator.Abstractions;
 using LoanMe.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LoanMe.Api.Controllers {
+    [ExcludeFromCodeCoverage(Justification = "This controller's methods functionalities are just " +
+        "very minimal and the services called are unit tests covered.")]
     [Route("api/loan")]
     public class LoanController : BaseController {
         private readonly IMediator _mediator;

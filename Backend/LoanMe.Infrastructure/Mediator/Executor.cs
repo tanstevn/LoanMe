@@ -1,7 +1,7 @@
 ﻿using LoanMe.Infrastructure.Mediator.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LoanMe.Infrastructure {
+namespace LoanMe.Infrastructure.Mediator {
     public class Executor<TRequest, TResponse> : IExecutor 
         where TRequest : IRequest<TResponse> {
         public async Task<object> ExecuteAsync(object request, IServiceProvider serviceProvider) {
